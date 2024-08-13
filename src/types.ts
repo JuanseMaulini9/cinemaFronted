@@ -11,3 +11,13 @@ export type MovieType = {
   vote_average: number;
   vote_count: number;
 };
+
+export type MovieContextType = {
+  contextMovies: MovieType[];
+  setContextMovies: (value: MovieType) => void;
+};
+
+export type GenresType = {
+  id: number;
+  name: string;
+};

@@ -1,26 +1,19 @@
-import { useMovies } from "../hooks/useMovies"
-import MovieCard from "../components/MovieCard"
+import { useGetMovies } from "../hooks/useMovies";
+import Billboard from "../components/Billboard";
 
+export default function HomePage() {
+  const { movies } = useGetMovies();
 
-export default function HomePage(){
-
-  const {movies} = useMovies()
-  
-  console.log(movies)
+  console.log(movies);
 
   return (
-    <div>
-      <header></header>
-      <section >
-        <ul className="flex flex-row flex-wrap gap-4 justify-center">
-         {movies.map((movie)=>(
-          <li key={movie._id}>
-            <MovieCard _id={movie._id} title={movie.title} poster_path={movie.poster_path}></MovieCard>
-          </li>
-        ))}
-        </ul>
-       
+    <div className="flex flex-col mx-28">
+      {/* <section className="w-full">
+        <MovieCarousel movies={movies}></MovieCarousel>
+      </section> */}
+      <section>
+        <Billboard movies={movies}></Billboard>
       </section>
     </div>
-  )
+  );
 }
