@@ -21,3 +21,16 @@ export type GenresType = {
   id: number;
   name: string;
 };
+
+export type Seattype = {
+  number: number;
+  state: string;
+  _id: string;
+};
+
+export type TheaterType = {
+  _id: string;
+  movie: MovieType;
+  sesats: Seattype[];
+  showtime: Date;
+};

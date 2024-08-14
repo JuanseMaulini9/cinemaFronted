@@ -16,7 +16,7 @@ export default function MoviePage(){
   return(<>
   <ImageMovie movie={movie}></ImageMovie>
   <div className="">
-    <Showing></Showing>
+    <Showing id={movieId}></Showing>
   </div>
   </>
   )
