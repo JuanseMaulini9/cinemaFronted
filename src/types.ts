@@ -31,6 +31,6 @@ export type Seattype = {
 export type TheaterType = {
   _id: string;
   movie: MovieType;
-  sesats: Seattype[];
+  seats: Seattype[];
   showtime: Date;
 };
