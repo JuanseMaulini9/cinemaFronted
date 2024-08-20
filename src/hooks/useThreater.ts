@@ -1,29 +1,31 @@
 import { useState, useEffect } from "react";
-import { TheaterType } from "../types";
+import { ThreaterType } from "../types";
 
 const useThreater = (id: string | undefined) => {
   const api_url = import.meta.env.VITE_API_URL;
-  const [threaters, setThreaters] = useState<TheaterType[]>([]);
+  const [threaters, setThreaters] = useState<ThreaterType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchingThreaters = async () => {
       try {
         const response = await fetch(`${api_url}threater/getThreaters`);
-        const data: TheaterType[] = await response.json();
+        const data: ThreaterType[] = await response.json();
 
         const filterMovie = data.filter(
           (threater) => threater.movie._id === id
         );
 
         setThreaters(filterMovie);
-        console.log(threaters);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchingThreaters();
   }, [id, api_url]);
-  return { threaters };
+  return { threaters, loading };
 };
 
 export default useThreater;

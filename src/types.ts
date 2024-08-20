@@ -28,7 +28,7 @@ export type Seattype = {
   _id: string;
 };
 
-export type TheaterType = {
+export type ThreaterType = {
   _id: string;
   movie: MovieType;
   seats: Seattype[];

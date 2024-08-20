@@ -1,8 +1,14 @@
 import useWeek from "../hooks/useWeek";
-import { useState } from "react";
+import { useReducer, useEffect } from "react";
 import useThreater from "../hooks/useThreater";
-import { formatTime } from "../utils/formatTime";
+
 import Threater from "./Threater";
+
+import Days from "./Days";
+import ShowTime from "./ShowTime";
+import Tickets from "./Tickets";
+
+import reducer, { State } from "../reducers/ReservationReducer";
 
 interface Props {
   id: string | undefined;
@@ -10,50 +16,50 @@ interface Props {
 
 export default function Showing({ id }: Props) {
   const { days } = useWeek();
-  const [day, setDay] = useState<Date>(days[0]);
-  
-  const { threaters } = useThreater(id);
 
-  console.log(threaters)
+  const { threaters, loading } = useThreater(id);
 
-  const handleDay = (index: number) => {
-    setDay(days[index]);
-    console.log(day);
+  console.log(threaters);
+
+  const initialState: State = {
+    showTime: days[0],
+    tickets: 1,
+    seats: [],
   };
 
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const filterThreaters =
+    threaters?.filter((threater) => {
+      const showtimeDate = new Date(threater.showtime);
+      return (
+        showtimeDate.getDate() === state.showTime.getDate() &&
+        showtimeDate.getMonth() === state.showTime.getMonth()
+      );
+    }) || [];
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
-      <div className="flex flex-col items-center m-4">
-        <h2 className="text-white font-bold text-xl">Funciones</h2>
-        <ul className="m-4 flex gap-2">
-          {days.map((day, index) => (
-            <li
-              onClick={() => handleDay(index)}
-              key={index}
-              className="w-16 bg-yellow-700 rounded text-center font-bold text-white cursor-pointer hover:bg-yellow-800"
-            >
-              {`${day.getDate()}/${day.getMonth() + 1}`}
-            </li>
-          ))}
-        </ul>
-        <div>
-          <h2 className="text-white font-bold text-center">Horarios</h2>
-          <ul className="m-4 flex gap-2">
-            {threaters.map((threater) => {
-              const date = new Date(threater.showtime)
-              return (
-                <li
-                key={threater._id}
-                className="w-16 bg-yellow-700 rounded text-center font-bold text-white cursor-pointer hover:bg-yellow-800"
-              >
-                {`${date.getHours()}:${formatTime(date.getMinutes())}`}
-              </li>
-              )
-            })}
-          </ul>
-        </div>
-        <Threater threater={threaters[0]}></Threater>
-      </div>
-    </>
+    <div className="flex flex-col items-center my-2 gap-4">
+      <Days days={days} state={state} dispatch={dispatch}></Days>
+      {filterThreaters.length === 0 ? (
+        <p className="m-10 text-white font-bold text-center">
+          No hay funciones este día
+        </p>
+      ) : (
+        <>
+          <ShowTime
+            threaters={filterThreaters}
+            state={state}
+            dispatch={dispatch}
+          ></ShowTime>
+          <Tickets threaters={threaters[0]}></Tickets>
+          <Threater threater={threaters[0]}></Threater>
+        </>
+      )}
+    </div>
   );
 }
