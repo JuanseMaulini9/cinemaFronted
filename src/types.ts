@@ -32,5 +32,5 @@ export type ThreaterType = {
   _id: string;
   movie: MovieType;
   seats: Seattype[];
-  showtime: Date;
+  showtime: string;
 };

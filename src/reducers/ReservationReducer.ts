@@ -4,13 +4,15 @@ export interface State {
   showTime: Date;
   tickets: number;
   seats: Seattype[];
+  threaterId: string;
 }
 
 export type Action =
   | { type: "SET_DAY"; payload: Date }
   | { type: "SET_SHOWTIME"; payload: Date }
   | { type: "SET_TICKETS"; payload: number }
-  | { type: "SET_SEATS"; payload: Seattype[] };
+  | { type: "SET_SEATS"; payload: Seattype[] }
+  | { type: "SET_THREATER"; payload: string };
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -28,6 +30,9 @@ export default function reducer(state: State, action: Action): State {
       updateShowTime.setSeconds(action.payload.getSeconds());
       return { ...state, showTime: updateShowTime };
     }
+
+    case "SET_THREATER":
+      return { ...state, threaterId: action.payload };
 
     case "SET_TICKETS":
       return { ...state, tickets: action.payload };

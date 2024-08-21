@@ -5,3 +5,7 @@ export function formatTime(i: number) {
   }
   return newValue;
 }
+
+export function dateFormate(i: string) {
+  return new Date(i);
+}

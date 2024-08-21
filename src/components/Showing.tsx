@@ -1,5 +1,5 @@
 import useWeek from "../hooks/useWeek";
-import { useReducer, useEffect } from "react";
+import { useReducer, useState } from "react";
 import useThreater from "../hooks/useThreater";
 
 import Threater from "./Threater";
@@ -9,6 +9,9 @@ import ShowTime from "./ShowTime";
 import Tickets from "./Tickets";
 
 import reducer, { State } from "../reducers/ReservationReducer";
+import { ThreaterType } from "../types";
+
+// import { dateFormate } from "../utils/formatTime";
 
 interface Props {
   id: string | undefined;
@@ -17,14 +20,15 @@ interface Props {
 export default function Showing({ id }: Props) {
   const { days } = useWeek();
 
-  const { threaters, loading } = useThreater(id);
+  const { threaters } = useThreater(id);
 
-  console.log(threaters);
+  const [selectedThreater, setSelectedThreater] = useState<ThreaterType>()
 
   const initialState: State = {
     showTime: days[0],
     tickets: 1,
     seats: [],
+    threaterId: ""
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -38,10 +42,10 @@ export default function Showing({ id }: Props) {
       );
     }) || [];
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    console.log("reducer: ", state)
 
+
+ 
   return (
     <div className="flex flex-col items-center my-2 gap-4">
       <Days days={days} state={state} dispatch={dispatch}></Days>
@@ -55,9 +59,24 @@ export default function Showing({ id }: Props) {
             threaters={filterThreaters}
             state={state}
             dispatch={dispatch}
+            setSelectedThreater={setSelectedThreater}
           ></ShowTime>
-          <Tickets threaters={threaters[0]}></Tickets>
-          <Threater threater={threaters[0]}></Threater>
+          {selectedThreater != null ? (
+            <>
+              <Tickets
+                threater={selectedThreater}
+                state={state}
+                dispatch={dispatch}
+              ></Tickets>
+              <Threater
+                threater={selectedThreater}
+                state={state}
+                dispatch={dispatch}
+              ></Threater>
+            </>
+          ) : (
+            ""
+          )}
         </>
       )}
     </div>
