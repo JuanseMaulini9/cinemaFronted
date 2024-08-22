@@ -7,7 +7,7 @@ interface Props {
 
 export default function Billboard({movies}: Props){
   return (
-    < >
+    <>
         <h2 className="text-white text-3xl font-bold text-center my-4">Cartelera</h2>
         <ul className="flex flex-row flex-wrap gap-4 justify-center">
          {movies.map((movie)=>(

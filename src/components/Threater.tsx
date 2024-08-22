@@ -55,11 +55,11 @@ export default function Threater({ threater, dispatch, state }: Props) {
                 seat.state === "libre"
                   ? "bg-white "
                   : seat.state === "ocupado"
-                  ? "bg-red-700 hover:bg-red-700 cursor-default"
+                  ? "bg-red-700 hover:bg-red-700 cursor-defaul"
                   : "bg-green-500 hover:bg-green-700 cursor-pointer"
               } 
               ${
-                count < state.tickets ? "cursor-pointer hover:bg-slate-400" : ""
+                count < state.tickets && seat.state !== "ocupado" ? "cursor-pointer hover:bg-slate-400" : ""
               }
               `}
             ></div>
