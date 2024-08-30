@@ -1,50 +1,51 @@
-# React + TypeScript + Vite
+# Cine Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositorio contiene el frontend para una aplicación de cine que muestra horarios de funciones y permite realizar reservas de asientos. La aplicación interactúa con el backend para gestionar funciones y cines.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Visualización de Funciones y Cines:** Muestra las películas y cines disponibles.
+- **Interacción con el Usuario:** Permite ver detalles de cines y películas, así como realizar reservas.
+- **Autenticación:** Proporciona funcionalidades de inicio de sesión y registro utilizando JWT (JSON Web Tokens).
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React:** Biblioteca para construir interfaces de usuario.
+- **Redux Toolkit:** Maneja el estado global de la aplicación.
+- **Tailwind CSS:** Utilizado para el diseño y la estilización de la interfaz.
+- **React Router:** Para la gestión de rutas y navegación en la aplicación.
 
-- Configure the top-level `parserOptions` property like this:
+## Instalación
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/tuusuario/cine-frontend.git
+    ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. **Navega al directorio del proyecto:**
+    ```bash
+    cd cine-frontend
+    ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+3. **Instala las dependencias:**
+    ```bash
+    npm install
+    ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+4. **Configura las variables de entorno:**
+    Crea un archivo `.env` en la raíz del proyecto y agrega las siguientes variables:
+    ```env
+    REACT_APP_API_URL=http://localhost:5000/api
+    ```
+
+5. **Inicia la aplicación:**
+    ```bash
+    npm start
+    ```
+
+## Rutas
+
+- **/movies:** Página que muestra todas las películas.
+- **/movie/:id:** Página con detalles de una película específica.
+- **/threaters:** Página que muestra todos los cines.
+- **/threater/:id:** Página con detalles de un cine específico.
